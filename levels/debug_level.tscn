@@ -41,10 +41,11 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
-friction = 0.2
+friction = 0.3
 vel_max = 70
-acceleration = 5
-jumpforce = 80
+acceleration = 10
+jumpforce = 180
+cut_height = 0.5
 GRAVITY = 10
 
 [node name="Sprite" type="Sprite" parent="player"]
