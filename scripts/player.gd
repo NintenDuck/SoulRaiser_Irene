@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 
 onready var sprite = $Sprite
+onready var animation = $AnimationPlayer
 
 export var friction = 0.0
 export var vel_max = 0
@@ -45,7 +46,6 @@ func _input(event):
 	if event.is_action_released("k_jump_action"):
 		if motion.y < 0:
 			motion.y *= cut_height
-			
 
 
 func check_jump():
@@ -61,3 +61,13 @@ func jump(force):
 func update_animations():
 	if direction != 0:
 		sprite.scale.x = direction
+		if is_on_floor():
+			animation.play("walk")
+	else:
+		if is_on_floor():
+			animation.play("idle")
+	if not is_on_floor():
+		if motion.y > 70:
+			animation.play("fall")
+		else:
+			animation.play("jump")
