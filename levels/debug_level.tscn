@@ -147,7 +147,8 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
-friction = 0.3
+floor_friction = 0.3
+air_friction = 0.01
 vel_max = 70
 acceleration = 10
 jumpforce = 200
@@ -175,6 +176,8 @@ anims/walk = SubResource( 8 )
 current = true
 smoothing_enabled = true
 smoothing_speed = 10.0
+
+[node name="playerStats" type="Node" parent="player"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 2 )
