@@ -4,19 +4,20 @@ extends KinematicBody2D
 onready var sprite = $Sprite
 onready var animation = $AnimationPlayer
 
-export var friction = 0.0
-export var floor_friction = 0.0
-export var air_friction = 0.0
-export var vel_max = 0
-export var acceleration = 0
-export var jumpforce = 0
-export var cut_height = 0.0
+export var friction: float 			= 0
+export var floor_friction: float 	= 0
+export var air_friction: float 		= 0
+export var vel_max: int 			= 0
+export var acceleration: int 		= 0
+export var jumpforce: int 			= 0
+export var cut_height: float 		= 0
 
-const UP = Vector2.UP
-export var GRAVITY = 0
+const UP: Vector2					= Vector2.UP
+export var GRAVITY: int 			= 0
+export var fallspd_max				= 0
 
-var motion = Vector2.ZERO
-var direction = 0
+var motion: Vector2					= Vector2.ZERO
+var direction: int 					= 0
 
 
 func _ready():
@@ -28,7 +29,7 @@ func _physics_process(delta):
 	movement()
 	update_animations()
 	check_jump()
-	
+
 
 func check_direction() -> void:
 	direction = int( Input.is_action_pressed( "k_right" ) ) - int( Input.is_action_pressed( "k_left" ) )
@@ -45,12 +46,14 @@ func movement() -> void:
 			friction = air_friction
 		else:
 			friction = floor_friction
-			
+
 		motion.x = lerp( motion.x, 0, friction )
 
 	motion.x += direction * acceleration
 	motion.x = clamp( motion.x, -vel_max, vel_max )
 	motion.y += GRAVITY
+	print(motion.y)
+	motion.y = min( motion.y, fallspd_max)
 
 	motion = move_and_slide(motion,UP)
 
