@@ -5,19 +5,19 @@ onready var sprite = $Sprite
 onready var animation = $AnimationPlayer
 
 export var friction: float 			= 0
-export var floor_friction: float 	= 0
-export var air_friction: float 		= 0
-export var vel_max: int 			= 0
+export var floor_friction: float= 0
+export var air_friction: float 	= 0
+export var vel_max: int 				= 0
 export var acceleration: int 		= 0
 export var jumpforce: int 			= 0
 export var cut_height: float 		= 0
 
-const UP: Vector2					= Vector2.UP
-export var GRAVITY: int 			= 0
-export var fallspd_max				= 0
+const UP: Vector2								= Vector2.UP
+export var GRAVITY: int 				= 0
+export var fallspd_max					= 0
 
-var motion: Vector2					= Vector2.ZERO
-var direction: int 					= 0
+var motion: Vector2							= Vector2.ZERO
+var direction: int 							= 0
 
 
 func _ready():
@@ -26,6 +26,7 @@ func _ready():
 
 func _physics_process(delta):
 	check_direction()
+	check_attack()
 	movement()
 	update_animations()
 	check_jump()
@@ -33,6 +34,11 @@ func _physics_process(delta):
 
 func check_direction() -> void:
 	direction = int( Input.is_action_pressed( "k_right" ) ) - int( Input.is_action_pressed( "k_left" ) )
+
+
+func check_attack():
+	if Input.is_action_just_pressed("k_attack"):
+		return		
 
 
 func movement() -> void:
