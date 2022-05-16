@@ -25,7 +25,7 @@ func shake(time,amount):
 
 func _on_Timer_timeout():
 	set_process(false)
-	tween.interpolate_property(self,
+	tween.interpolate_property(	self,
 								"offset",
 								offset,
 								default_offset,

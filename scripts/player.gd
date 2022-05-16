@@ -5,19 +5,19 @@ onready var sprite = $Sprite
 onready var animation = $AnimationPlayer
 
 export var friction: float 			= 0
-export var floor_friction: float= 0
-export var air_friction: float 	= 0
-export var vel_max: int 				= 0
+export var floor_friction: float	= 0
+export var air_friction: float 		= 0
+export var vel_max: int 			= 0
 export var acceleration: int 		= 0
 export var jumpforce: int 			= 0
 export var cut_height: float 		= 0
 
-const UP: Vector2								= Vector2.UP
-export var GRAVITY: int 				= 0
-export var fallspd_max					= 0
+const UP: Vector2					= Vector2.UP
+export var GRAVITY: int 			= 0
+export var fallspd_max				= 0
 
-var motion: Vector2							= Vector2.ZERO
-var direction: int 							= 0
+var motion: Vector2					= Vector2.ZERO
+var direction: int 					= 0
 
 
 func _ready():
@@ -38,6 +38,7 @@ func check_direction() -> void:
 
 func check_attack():
 	if Input.is_action_just_pressed("k_attack"):
+		Global.camera.shake(0.3,1)
 		return		
 
 
