@@ -176,8 +176,15 @@ anims/walk = SubResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
 smoothing_enabled = true
 smoothing_speed = 10.0
+offset_v = -1.0
+drag_margin_left = 0.05
+drag_margin_right = 0.05
+drag_margin_bottom = 0.05
+editor_draw_drag_margin = true
 script = ExtResource( 5 )
 
 [node name="Tween" type="Tween" parent="player/Camera2D"]
