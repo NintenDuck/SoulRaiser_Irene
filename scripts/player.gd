@@ -38,7 +38,6 @@ func check_direction() -> void:
 
 func check_attack():
 	if Input.is_action_just_pressed("k_attack"):
-		Global.camera.shake(0.3,1)
 		return		
 
 
@@ -59,7 +58,6 @@ func movement() -> void:
 	motion.x += direction * acceleration
 	motion.x = clamp( motion.x, -vel_max, vel_max )
 	motion.y += GRAVITY
-	print(motion.y)
 	motion.y = min( motion.y, fallspd_max)
 
 	motion = move_and_slide(motion,UP)
@@ -94,3 +92,8 @@ func update_animations() -> void:
 			animation.play("fall")
 		else:
 			animation.play("jump")
+
+
+func _on_Hurtbox_hit(damage_amount):
+	print("Damage received:", damage_amount)
+	Global.camera.shake(0.2,1)
