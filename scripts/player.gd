@@ -1,8 +1,12 @@
+#TODO: Evitar que de un salto cada vez que sale de un slope
+# motion.y se queda con velocidad despues de estar en el slope
+
 extends KinematicBody2D
 
 
 onready var sprite = $Sprite
 onready var animation = $AnimationPlayer
+onready var floorDetector = $Sprite/floorDetector
 
 export var friction: float 			= 0
 export var floor_friction: float	= 0
@@ -13,55 +17,76 @@ export var jumpforce: int 			= 0
 export var cut_height: float 		= 0
 
 const UP: Vector2					= Vector2.UP
+const MAX_SLOPE_ANGLE:int = 46
+
 export var GRAVITY: int 			= 0
 export var fallspd_max				= 0
 
 var motion: Vector2					= Vector2.ZERO
-var direction: int 					= 0
-
+var snap_vector: Vector2 = Vector2.ZERO
+var on_slope: bool = false
 
 func _ready():
 	pass
 
 
 func _physics_process(delta):
-	check_direction()
-	check_attack()
-	movement()
-	update_animations()
+	var input_vector = check_input_vector()
+	print(input_vector)
+	apply_gravity(input_vector)
+	apply_horizontal_force(input_vector)
+	check_if_on_slope()
+	update_snap_vector()
 	check_jump()
+	check_attack()
+	movement(input_vector)
+	update_animations(input_vector)
 
 
-func check_direction() -> void:
-	direction = int( Input.is_action_pressed( "k_right" ) ) - int( Input.is_action_pressed( "k_left" ) )
+func check_input_vector():
+	var input_vector = Vector2.ZERO
+	input_vector = int( Input.get_action_strength( "k_right" ) ) - int( Input.get_action_strength( "k_left" ) )
+	return input_vector
 
 
-func check_attack():
+func check_attack() -> void:
 	if Input.is_action_just_pressed("k_attack"):
 		return		
 
 
-func movement() -> void:
-	# Check user input to get current direction
+func apply_horizontal_force(input_vector):
+	if input_vector != 0:
+		motion.x += input_vector * acceleration
+		motion.x = clamp(motion.x, -vel_max, vel_max)
 
+
+func apply_gravity(input_vector):
+	if not is_on_floor():
+		motion.y += GRAVITY
+		motion.y = min(motion.y, fallspd_max)
+
+func movement(input_vector) -> void:
+	var last_position = position
+	
+	# Check user input to get current direction
 	# 0 = neutral
 	# 1 = right
 	# 3 = left
-	if direction == 0:
+	if input_vector == 0:
 		if not is_on_floor():
 			friction = air_friction
 		else:
 			friction = floor_friction
 
+#		motion.x = 0
 		motion.x = lerp( motion.x, 0, friction )
+	
+	motion = move_and_slide_with_snap(motion, snap_vector*4, UP, true, 4, deg2rad(MAX_SLOPE_ANGLE))
 
-	motion.x += direction * acceleration
-	motion.x = clamp( motion.x, -vel_max, vel_max )
-	motion.y += GRAVITY
-	motion.y = min( motion.y, fallspd_max)
-
-	motion = move_and_slide(motion,UP)
-
+#	SLOPE SLIDING FIX (hack)
+	print(abs(motion.y))
+	if is_on_floor() and get_floor_velocity().length() == 0 and abs(motion.x) < 1:
+		position.x = last_position.x
 
 func _input(event):
 	if event.is_action_released("k_jump_action"):
@@ -77,11 +102,24 @@ func check_jump() -> void:
 
 func jump(force:float) -> void:
 	motion.y -= force
+	snap_vector = Vector2.ZERO
 
 
-func update_animations() -> void:
-	if direction != 0:
-		sprite.scale.x = direction
+func check_if_on_slope() -> void:
+	if floorDetector.get_collision_normal().y < -0.99:
+		on_slope = true
+	else:
+		on_slope = false
+
+
+func update_snap_vector() -> void:
+	if is_on_floor():
+		snap_vector = Vector2.DOWN
+
+
+func update_animations(input_vector) -> void:
+	if input_vector != 0:
+		sprite.scale.x = input_vector
 		if is_on_floor():
 			animation.play("walk")
 	else:

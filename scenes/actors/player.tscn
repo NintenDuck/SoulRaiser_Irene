@@ -120,6 +120,11 @@ texture = ExtResource( 3 )
 hframes = 23
 frame = 1
 
+[node name="floorDetector" type="RayCast2D" parent="Sprite"]
+position = Vector2( 3, 16 )
+enabled = true
+cast_to = Vector2( 0, 10 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -5 )
 shape = SubResource( 3 )
