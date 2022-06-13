@@ -93,6 +93,7 @@ tracks/0/keys = {
 }
 
 [node name="player" type="KinematicBody2D"]
+collision_layer = 2
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
