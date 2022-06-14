@@ -32,8 +32,8 @@ func _ready():
 
 func _physics_process(delta):
 	var input_vector = check_input_vector()
-	print(input_vector)
-	apply_gravity(input_vector)
+
+	apply_gravity()
 	apply_horizontal_force(input_vector)
 	check_if_on_slope()
 	update_snap_vector()
@@ -60,7 +60,7 @@ func apply_horizontal_force(input_vector):
 		motion.x = clamp(motion.x, -vel_max, vel_max)
 
 
-func apply_gravity(input_vector):
+func apply_gravity():
 	if not is_on_floor():
 		motion.y += GRAVITY
 		motion.y = min(motion.y, fallspd_max)
@@ -84,7 +84,6 @@ func movement(input_vector) -> void:
 	motion = move_and_slide_with_snap(motion, snap_vector*4, UP, true, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 #	SLOPE SLIDING FIX (hack)
-	print(abs(motion.y))
 	if is_on_floor() and get_floor_velocity().length() == 0 and abs(motion.x) < 1:
 		position.x = last_position.x
 
@@ -97,6 +96,7 @@ func _input(event):
 func check_jump() -> void:
 	if is_on_floor():
 		if Input.is_action_just_pressed("k_jump_action"):
+			motion.y = 0
 			jump(jumpforce)
 
 
