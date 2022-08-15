@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ph2.png-a2d87f90b78348570941f48cca698c7b.stex"
+path="res://.import/Player.png-f591d0af4428b9da20a4346fd22e05e5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/sprites/tilesets/ph2.png"
-dest_files=[ "res://.import/ph2.png-a2d87f90b78348570941f48cca698c7b.stex" ]
+source_file="res://Player/Textures/Player.png"
+dest_files=[ "res://.import/Player.png-f591d0af4428b9da20a4346fd22e05e5.stex" ]
 
 [params]
 

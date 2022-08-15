@@ -7,7 +7,7 @@ onready var timer = $Timer
 
 func _ready():
 	set_process(false)
-	Global.camera = self
+	GlobalData.camera = self
 	randomize()
 
 

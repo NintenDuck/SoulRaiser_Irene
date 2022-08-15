@@ -134,4 +134,4 @@ func update_animations(input_vector) -> void:
 
 func _on_Hurtbox_hit(damage_amount):
 	print("Damage received:", damage_amount)
-	Global.camera.shake(0.2,1)
+	GlobalData.camera.shake(0.2,1)

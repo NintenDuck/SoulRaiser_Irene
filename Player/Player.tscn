@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://scripts/camera.gd" type="Script" id=1]
-[ext_resource path="res://scripts/player.gd" type="Script" id=2]
-[ext_resource path="res://resources/sprites/player.png" type="Texture" id=3]
-[ext_resource path="res://scenes/collision/hurtbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Camera.gd" type="Script" id=1]
+[ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Player/Textures/Player.png" type="Texture" id=3]
+[ext_resource path="res://Collisions/Hurtbox.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 2, 5 )
@@ -92,7 +92,7 @@ tracks/0/keys = {
 "values": [ 2, 3, 4, 1 ]
 }
 
-[node name="player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
 __meta__ = {
