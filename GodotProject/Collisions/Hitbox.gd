@@ -1,6 +1,11 @@
+class_name MyHitbox
 extends Area2D
 
-export(int) var damage = 1
+func _ready():
+	connect("area_entered", self, "_on_hurtbox_entered")
 
-func _on_Hitbox_area_entered(hurtbox):
-	hurtbox.emit_signal("hit", damage)
+
+func _on_hurtbox_entered(hurtbox:Hurtbox):
+	if hurtbox == null: return
+	
+	if owner.has_method("take_damage"): owner.take_damage(hurtbox.damage)

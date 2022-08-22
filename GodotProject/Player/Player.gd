@@ -1,6 +1,3 @@
-#TODO: Evitar que de un salto cada vez que sale de un slope
-# motion.y se queda con velocidad despues de estar en el slope
-
 extends KinematicBody2D
 
 
@@ -132,6 +129,5 @@ func update_animations(input_vector) -> void:
 			animation.play("jump")
 
 
-func _on_Hurtbox_hit(damage_amount):
-	print("Damage received:", damage_amount)
-	GlobalData.camera.shake(0.2,1)
+func take_damage(damageAmount):
+	print("%s Damage Taken" % [str(damageAmount)])
